@@ -3,7 +3,7 @@
 use Illuminate\Support\ServiceProvider;
 
 
-class IntercomServiceProvider extends ServiceProvider {
+class IntercomApiServiceProvider extends ServiceProvider {
 
 	/**
 	 * Bootstrap the application services.
