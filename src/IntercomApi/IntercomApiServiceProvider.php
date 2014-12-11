@@ -22,12 +22,9 @@ class IntercomApiServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		$this->app->singleton('\IntercomApi\Api', function($app)
+		$this->app->singleton('\IntercomApi\Api', function($app, $parameters)
 		{
-			return new \IntercomApi\Api(array(
-				'app_id' => 'gn0zv6mj',
-				'api_key' => '0da62f3522487aa824f116ffce806b018d667c95'
-			));
+			return new \IntercomApi\Api($parameters);
 		});
 	}
 }
