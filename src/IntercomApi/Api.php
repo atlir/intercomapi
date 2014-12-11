@@ -9,11 +9,18 @@ class Api {
 
 	protected $event_name = 'purchase';
 
-	public function __construct($credentials){
+	public function __construct($intercom){
 
-		$this->intercom = IntercomBasicAuthClient::factory($credentials);
+		$this->intercom = $intercom;
 	}
 
+
+
+	/**
+	 * @param $userId
+	 * @param $eventName
+	 * @param $eventProperties
+	 */
 	public function pushEvent($userId, $eventName, $eventProperties)
 	{
 		$event_data = array_merge($eventProperties, array(
@@ -25,6 +32,12 @@ class Api {
 		$this->intercom->createEvent($event_data);
 	}
 
+
+
+	/**
+	 * @param $userId
+	 * @param $price
+	 */
 	public function pushPurchase($userId, $price)
 	{
 		$eventProperties = array(
@@ -37,6 +50,13 @@ class Api {
 		$this->pushEvent($userId, $this->event_name, $eventProperties);
 	}
 
+
+
+	/**
+	 * @param $userId
+	 * @param $userProperties
+	 * @return array
+	 */
 	public function createUser($userId, $userProperties)
 	{
 		// Create a new user with more details
@@ -49,6 +69,14 @@ class Api {
 		return $user;
 	}
 
+
+
+	/**
+	 * @param $userId
+	 * @param $property
+	 * @param $value
+	 * @return array
+	 */
 	public function updateProperty($userId, $property, $value)
 	{
 		$user_data = array(
@@ -61,33 +89,4 @@ class Api {
 		return $user;
 	}
 
-	public function getUsers(){
-		$users = $this->intercom->getUsers();
-		return $users['users'];
-	}
-
-	public function getUserById($id){
-		$user = $this->intercom->getUser(array("id" => $id));
-		return $user;
-	}
-
-	public function getUserByEmail($email){
-		$user = $this->intercom->getUser(array("email" => $email));
-		return $user;
-	}
-
-	public function deleteUserById($id){
-		$user = $this->intercom->deleteUser(array("id" => $id));
-		return $user;
-	}
-
-	public function deleteUserByEmail($email){
-		$user = $this->intercom->deleteUser(array("email" => $email));
-		return $user;
-	}
-
-	public function deleteUserByUserId($userId){
-		$user = $this->intercom->deleteUser(array("user_id" => $userId));
-		return $user;
-	}
-} 
+}
